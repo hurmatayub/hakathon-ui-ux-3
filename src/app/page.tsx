@@ -2,7 +2,7 @@
 
 import Booking from "./Component/Booking";
 import Hero from "./Component/Hero";
-import Navbar from "./Component/Navbar";
+
 import Popular from "./Component/Popular";
 import Recommanded from "./Component/Recommanded";
 

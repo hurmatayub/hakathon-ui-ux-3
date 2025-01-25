@@ -1,12 +1,14 @@
+import { NextPage } from 'next';
 import Images from "@/app/Component/Images";
 import { fullProduct } from "@/app/Component/interface";
 import { client } from "@/app/lib/sanity";
 import Image from "next/image";
 import Link from "next/link";
 
+// Function to fetch product data based on slug
 async function getData(slug: string) {
   const query = `*[_type == "product" && slug.current == "${slug}"] [0] {
-  _id,
+    _id,
     name,
     "likedImageUrl": liked.asset->url,
     images,
@@ -20,26 +22,31 @@ async function getData(slug: string) {
     buttonText,
     "slug": slug.current,
     "categoryName": category->name,
-  
-}`;
+  }`;
 
   const data = await client.fetch(query);
-
   return data;
 }
 
-export default async function productPage({
-  params,
-}: {
+// Define types for params
+interface ProductPageProps {
   params: { slug: string };
-}) {
-  const data: fullProduct = await getData(params.slug);
+}
+
+// Product page component
+const ProductPage: NextPage<ProductPageProps> = async ({ params }) => {
+  const data: fullProduct = await getData(params.slug); // Fetch data inside the component
 
   return (
     <div className="bg-[#F6F7F9]">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 md:grid-cols-2">
-          <Images images={data.images} />
+          <Images images={data.images.map(image => ({
+            ...image,
+            _id: image._id || '',
+            _type: 'image',
+            asset: image.asset || { _ref: '' }
+          }))} />
 
           <div className="bg-white p-6 rounded-lg">
             <h1 className="text-2xl font-bold mb-2">{data.name}</h1>
@@ -90,7 +97,7 @@ export default async function productPage({
           </div>
         </div>
 
-     
+        {/* Reviews Section */}
         <div className="bg-white p-6 mt-10 rounded-lg">
           <h2 className="text-xl font-bold mb-4">Reviews</h2>
           <div className="space-y-6">
@@ -99,8 +106,8 @@ export default async function productPage({
               <p className="text-xs text-[#90A3BF]">CEO at Bukalapak - 23 July 2022</p>
               <p className="text-sm text-[#596780]">
                 We are very happy with the service from the MCRNT App. MCRNT has
-a wide range of variety of cars with good and comfortable
-facilities. In addition, the service provided by the officers is also very friendly and very polite.
+                a wide range of variety of cars with good and comfortable
+                facilities. In addition, the service provided by the officers is also very friendly and very polite.
               </p>
             </div>
             <div className="border-b pb-4">
@@ -108,8 +115,8 @@ facilities. In addition, the service provided by the officers is also very frien
               <p className="text-xs text-[#90A3BF]">CEO at Amazon - 23 July 2022</p>
               <p className="text-sm text-[#596780]">
                 We are grateful for the service of the MCRNT Application. MCRNT
-has low prices and a wide variety of cars with good and
-comfortable facilities. In addition, the service provided by the officers is also very friendly and very polite.
+                has low prices and a wide variety of cars with good and
+                comfortable facilities. In addition, the service provided by the officers is also very friendly and very polite.
               </p>
             </div>
           </div>
@@ -117,8 +124,10 @@ comfortable facilities. In addition, the service provided by the officers is als
       </div>
     </div>
   );
-}
+};
+
+export default ProductPage;
 
 
-
-
+   
+              

@@ -16,15 +16,25 @@ export default interface simplifiedProduct {
     transmissionn: string;
     peopleCapacity: string;
     buttonText: string;
-
-}
-
-export interface fullProduct {
-    reviews: any;
-    // reviewCount: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
-    // rating: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
+  }
+  
+  export interface fullProduct {
+    reviews: Array<{ 
+      user: string;
+      comment: string;
+      rating: number;
+      date: string;
+    }>; 
+    reviewCount: number;
+    rating: number;
     _id: string;
-    images: any;
+    images: Array<{
+      _type: string;
+      asset: { _ref: string; };
+      _id: string; 
+      url: string; 
+      altText: string;
+    }>;
     name: string;
     description: string;
     slug: string;
@@ -38,5 +48,5 @@ export interface fullProduct {
     transmissionn: string;
     peopleCapacity: string;
     buttonText: string;
-
-}
+  }
+  

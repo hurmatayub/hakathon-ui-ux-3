@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Topcars from './Topcars';
 import Recantcars from './Recantcars';
 import DashboardRental from './dashboardRental';
-import Link from 'next/link';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');

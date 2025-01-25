@@ -3,13 +3,11 @@ import Image from "next/image";
 const insight = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-  
       <div className="py-12 text-center">
         <h1 className="text-4xl font-bold text-[#1A202C]">Car Rental Insights</h1>
         <p className="text-xl text-[#4A5568] mt-4">Everything you need to know before renting a car!</p>
       </div>
 
-    
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
         <div className="bg-white p-6 rounded-lg shadow-md">
           <Image
@@ -54,11 +52,10 @@ const insight = () => {
         </div>
       </div>
 
-      
       <div className="mt-16 text-center">
         <h2 className="text-3xl font-semibold text-[#1A202C]">Why Choose Us?</h2>
         <p className="text-lg text-[#4A5568] mt-4">
-          Our rental services are designed to provide convenience, comfort, and safety. Here's why we stand out:
+          Our rental services are designed to provide convenience, comfort, and safety. Here&apos;s why we stand out:
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           <div className="bg-white p-6 rounded-lg shadow-md">
@@ -87,27 +84,26 @@ const insight = () => {
         </div>
       </div>
 
-     
       <div className="mt-16">
         <h2 className="text-3xl font-semibold text-[#1A202C] text-center">What Our Customers Say</h2>
         <div className="flex flex-wrap justify-center gap-6 mt-8">
           <div className="bg-white p-6 rounded-lg shadow-md w-full sm:w-1/3">
             <p className="text-lg text-[#4A5568]">
-              "I had an amazing experience renting from this company. The car was clean, and the process was seamless!"
+              &quot;I had an amazing experience renting from this company. The car was clean, and the process was seamless!&quot;
             </p>
             <div className="mt-4 text-[#1A202C] font-semibold">Sarah L.</div>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md w-full sm:w-1/3">
             <p className="text-lg text-[#4A5568]">
-              "The SUV was perfect for our family trip. We were comfortable the whole way and had plenty of space."
+              &quot;The SUV was perfect for our family trip. We were comfortable the whole way and had plenty of space.&quot;
             </p>
             <div className="mt-4 text-[#1A202C] font-semibold">Michael D.</div>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md w-full sm:w-1/3">
             <p className="text-lg text-[#4A5568]">
-              "Excellent service, great rates, and the convertible made our weekend getaway unforgettable!"
+              &quot;Excellent service, great rates, and the convertible made our weekend getaway unforgettable!&quot;
             </p>
             <div className="mt-4 text-[#1A202C] font-semibold">David K.</div>
           </div>

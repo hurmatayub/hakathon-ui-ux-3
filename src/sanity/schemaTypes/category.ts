@@ -1,12 +1,15 @@
-export default {
+const categorySchema = {
     name: "category",
     type: "document",
     title: "Categories", 
     fields: [
-        {
+      {
         name: "name",
         title: "Name of Category",
         type: "string",
-    },
-],
-}
+      },
+    ],
+  };
+  
+  export default categorySchema;
+  

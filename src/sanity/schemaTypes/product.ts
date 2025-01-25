@@ -1,6 +1,4 @@
-
-
-export default {
+const productSchema = {
   name: "product", 
   type: "document", 
   title: "Car", 
@@ -19,7 +17,7 @@ export default {
       name: "images",
       type: "array",
       title: "Product Images",
-      of: [{type: "image"}],
+      of: [{ type: "image" }],
     },
     {
       name: "description",
@@ -29,28 +27,25 @@ export default {
     {
       name: "slug",
       type: "slug",
-      title: " Product Slug",
+      title: "Product Slug",
       options: {
         source: "name",
-
-      }
+      },
     },
     {
       name: "feul",
       type: "image",
       title: "Feul",
-      
     },
     {
       name: "feulCapacity",
       type: "string",
-      title: "FeulCapacity",
+      title: "Feul Capacity",
     },
     {
       name: "transmission",
       type: "image",
-      title:"Transmission",
-     
+      title: "Transmission",
     },
     {
       name: "transmissionn",
@@ -60,8 +55,7 @@ export default {
     {
       name: "capacity",
       type: "image",
-      title:"People",
-      
+      title: "People",
     },
     {
       name: "peopleCapacity",
@@ -81,8 +75,7 @@ export default {
     {
       name: "liked",
       type: "image",
-      title:"Liked",
-      
+      title: "Liked",
     },
     {
       name: "buttonText",
@@ -98,10 +91,9 @@ export default {
         {
           type: "category",
         },
-
-      ]
+      ],
     },
-    
-    
   ],
 };
+
+export default productSchema;
