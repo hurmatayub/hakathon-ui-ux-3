@@ -1,291 +1,133 @@
-"use client";
+"use client"
+import React, { useState } from 'react';
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+const Settings = () => {
+  const [profilePic, setProfilePic] = useState<string | null>(null);
+  const [isAvailable, setIsAvailable] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
-export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("profile");
-  const [profilePic, setProfilePic] = useState<string | null>("/default-profile.png"); // Default Profile Picture
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("johndoe@example.com");
-  const [phone, setPhone] = useState("+1234567890");
-  const [isSaved, setIsSaved] = useState(false); // State to manage the save confirmation
-
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [smsNotifications, setSmsNotifications] = useState(false);
-
-
-  useEffect(() => {
-    
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    if (darkMode) {
+      document.documentElement.classList.remove('dark');
     } else {
-      setIsDarkMode(false);
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
-  useEffect(() => {
-    
-    if (isDarkMode) {
-      localStorage.setItem("theme", "dark");
-      document.documentElement.classList.add("dark");
-    } else {
-      localStorage.setItem("theme", "light");
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDarkMode]);
-
-  const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        setProfilePic(fileReader.result as string);
-      };
-      fileReader.readAsDataURL(file);
+      document.documentElement.classList.add('dark');
     }
   };
-
-  const handleSaveChanges = () => {
-    // Simulate saving changes
-    setIsSaved(true);
-    setTimeout(() => {
-      setIsSaved(false); 
-    }, 3000);
-  };
-
-  const handleChangePassword = () => {
-    
-    if (newPassword !== confirmPassword) {
-      alert("New password and confirmation password do not match.");
-    } else {
-      alert("Password changed successfully!");
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-    }
-  };
-
-  const handleSaveNotifications = () => {
-    alert("Notification preferences saved!");
-  };
-
-  const tabs = [
-    { id: "profile", name: "Profile Settings" },
-    { id: "password", name: "Change Password" },
-    { id: "notifications", name: "Notifications" },
-  ];
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 dark:text-gray-100">
-      <div className="max-w-5xl mx-auto mt-10 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold mb-6">Settings</h1>
-
-        
-        <div className="flex justify-end mb-6">
-          <label className="flex items-center cursor-pointer">
-            <span className="mr-2 text-sm">Dark Mode</span>
-            <input
-              type="checkbox"
-              checked={isDarkMode}
-              onChange={() => setIsDarkMode(!isDarkMode)}
-              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-            />
-          </label>
-        </div>
-
-       
-        <div className="flex border-b mb-6 dark:border-gray-600">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-2 font-medium ${
-                activeTab === tab.id
-                  ? "border-b-2 border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
-                  : "text-gray-500 dark:text-gray-400"
-              }`}
-            >
-              {tab.name}
-            </button>
-          ))}
-        </div>
-
-    
-        {activeTab === "profile" && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
-
-         
-            <div className="flex items-center gap-6 mb-6">
-              <div className="relative w-24 h-24">
-                <Image
-                  src={profilePic || "/default-profile.png"}
-                  alt="Profile Picture"
-                  className="rounded-full object-cover"
-                  layout="fill"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">
-                  Upload Profile Picture
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleProfilePicChange}
-                  className="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border file:border-gray-300 dark:file:border-gray-500 file:text-gray-600 dark:file:text-gray-300 hover:file:bg-gray-100 dark:hover:file:bg-gray-700"
-                />
-              </div>
-            </div>
-
-   
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400"
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400"
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  Phone
-                </label>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === "password" && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Change Password</h2>
-
-            <div className="grid grid-cols-1 gap-4">
-              <div>
-                <label className="block text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  Current Password
-                </label>
-                <input
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-600 dark:text-gray-300 mb-2">
-                  Confirm New Password
-                </label>
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-400"
-                />
-              </div>
-            </div>
-
-            <button
-              onClick={handleChangePassword}
-              className="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition dark:bg-blue-400 dark:hover:bg-blue-500"
-            >
-              Change Password
-            </button>
-          </div>
-        )}
-
-        {activeTab === "notifications" && (
-          <div>
-            <h2 className="text-xl font-semibold mb-4">Notification Preferences</h2>
-
-            <div className="flex items-center mb-4">
-              <input
-                type="checkbox"
-                checked={emailNotifications}
-                onChange={() => setEmailNotifications(!emailNotifications)}
-                className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <span className="ml-3 text-sm text-gray-600 dark:text-gray-300">Email Notifications</span>
-            </div>
-
-            <div className="flex items-center mb-4">
-              <input
-                type="checkbox"
-                checked={smsNotifications}
-                onChange={() => setSmsNotifications(!smsNotifications)}
-                className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <span className="ml-3 text-sm text-gray-600 dark:text-gray-300">SMS Notifications</span>
-            </div>
-
-            <button
-              onClick={handleSaveNotifications}
-              className="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition dark:bg-blue-400 dark:hover:bg-blue-500"
-            >
-              Save Notification Preferences
-            </button>
-          </div>
-        )}
-
-        {/* Save Changes Button */}
-        <div className="mt-6 flex justify-end">
+    <div className={`min-h-screen p-8 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <div className={`max-w-4xl mx-auto p-8 rounded-xl shadow-xl ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+        {/* Dark Mode Toggle */}
+        <div className="flex justify-between items-center mb-8">
+          <h1 className={`text-4xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>Settings</h1>
           <button
-            onClick={handleSaveChanges}
-            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition dark:bg-blue-400 dark:hover:bg-blue-500"
+            onClick={toggleDarkMode}
+            className={`p-2 rounded-lg ${darkMode ? 'bg-yellow-400 text-gray-800' : 'bg-gray-800 text-white'}`}
+          >
+            {darkMode ? 'Light Mode' : 'Dark Mode'}
+          </button>
+        </div>
+
+        {/* Account Settings */}
+        <div className={`bg-gray-100 p-6 rounded-xl shadow-md mb-8 ${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-50'}`}>
+          <h2 className="text-2xl font-semibold mb-6">Account Settings</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Username */}
+            <div>
+              <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Username</label>
+              <input type="text" className={`w-full p-4 bg-gray-50 rounded-lg shadow-sm border focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-gray-600 text-white' : 'bg-white'}`} placeholder="Enter your username" />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Email Address</label>
+              <input type="email" className={`w-full p-4 bg-gray-50 rounded-lg shadow-sm border focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-gray-600 text-white' : 'bg-white'}`} placeholder="Enter your email" />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Phone Number</label>
+              <input type="text" className={`w-full p-4 bg-gray-50 rounded-lg shadow-sm border focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-gray-600 text-white' : 'bg-white'}`} placeholder="Enter your phone number" />
+            </div>
+
+            {/* Profile Picture */}
+            <div>
+              <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Profile Picture</label>
+              <input type="file" onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setProfilePic(URL.createObjectURL(e.target.files[0]));
+                }
+              }} className={`w-full p-4 bg-gray-50 rounded-lg shadow-sm border ${darkMode ? 'bg-gray-600 text-white' : 'bg-white'}`} />
+            </div>
+          </div>
+        </div>
+
+        {/* Car Management */}
+        <div className={`bg-gray-100 p-6 rounded-xl shadow-md mb-8 ${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-50'}`}>
+          <h2 className="text-2xl font-semibold mb-6">Car Management</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Car Model */}
+            <div>
+              <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Car Model</label>
+              <input type="text" className={`w-full p-4 bg-gray-50 rounded-lg shadow-sm border focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-gray-600 text-white' : 'bg-white'}`} placeholder="Enter car model" />
+            </div>
+
+            {/* Rent per Day */}
+            <div>
+              <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Rent Per Day</label>
+              <input type="number" className={`w-full p-4 bg-gray-50 rounded-lg shadow-sm border focus:ring-2 focus:ring-blue-500 ${darkMode ? 'bg-gray-600 text-white' : 'bg-white'}`} placeholder="Enter rent per day" />
+            </div>
+
+            {/* Car Availability */}
+            <div>
+              <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Car Available for Rent</label>
+              <div className="flex items-center">
+                <input type="checkbox" checked={isAvailable} onChange={() => setIsAvailable(!isAvailable)} className="rounded-full border-2 text-blue-500 transition duration-200 ease-in-out mr-3" />
+                <span className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{isAvailable ? 'Available' : 'Not Available'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Notifications */}
+        <div className={`bg-gray-100 p-6 rounded-xl shadow-md mb-8 ${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-50'}`}>
+          <h2 className="text-2xl font-semibold mb-6">Notifications</h2>
+
+          <div className="flex items-center space-x-4 mb-4">
+            <input type="checkbox" className="rounded-full text-blue-500 transition duration-200 ease-in-out" />
+            <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Email Notifications</label>
+          </div>
+          <div className="flex items-center space-x-4 mb-4">
+            <input type="checkbox" className="rounded-full text-blue-500 transition duration-200 ease-in-out" />
+            <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>SMS Notifications</label>
+          </div>
+          <div className="flex items-center space-x-4 mb-4">
+            <input type="checkbox" className="rounded-full text-blue-500 transition duration-200 ease-in-out" />
+            <label className={`text-gray-600 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Push Notifications</label>
+          </div>
+        </div>
+
+        {/* Save & Cancel Buttons */}
+        <div className="flex justify-end space-x-6 mt-8">
+          {/* Save Changes Button */}
+          <button
+            className={`bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-10 rounded-lg shadow-lg hover:from-blue-400 hover:to-blue-500 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300`}
           >
             Save Changes
           </button>
+
+          {/* Cancel Button */}
+          <button
+            className={`bg-white text-gray-700 py-3 px-10 rounded-lg shadow-lg border border-gray-300 hover:bg-gray-100 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-200`}
+          >
+            Cancel
+          </button>
         </div>
-        {isSaved && (
-          <div className="mt-4 text-center text-green-500 font-semibold">
-            Changes have been saved!
-          </div>
-        )}
       </div>
     </div>
   );
 }
+
+export default Settings;

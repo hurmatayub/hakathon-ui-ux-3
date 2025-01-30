@@ -80,7 +80,7 @@ export default function Navbar() {
           className="w-[44px] h-[44px]"
         />
         </Link>
-        <Link href="/settings">
+        <Link href="/Settings">
         <Image
           src="/icons/Settings.png"
           alt="Settings Icon"
