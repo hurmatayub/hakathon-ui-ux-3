@@ -1,5 +1,5 @@
 "use client";
-import  { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Topcars from "./Topcars";
@@ -8,15 +8,6 @@ import DashboardRental from "./dashboardRental";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-  }, [darkMode]);
 
   const getIconSource = (tabName: string) => {
     if (activeTab === tabName) {
@@ -26,13 +17,11 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="w-full h-[900px] bg-[#F6F7F9] dark:bg-[#1A1A1A] relative transition-all duration-300">
-      <div className="hidden md:block w-[286px] h-[895px] bg-[#FFFFFF] dark:bg-[#2C2C2C] border border-[#F3F5F7] dark:border-[#444]">
-        <div className="w-full h-auto border-b border-[#F3F5F7] dark:border-[#444] py-4">
+    <div className="w-full h-[900px] bg-[#F6F7F9] relative transition-all duration-300">
+      <div className="hidden md:block w-[286px] h-[895px] bg-[#FFFFFF] border border-[#F3F5F7]">
+        <div className="w-full h-auto border-b border-[#F3F5F7] py-4">
           <div className="pl-4">
-            <p className="text-[#94A7CB66] dark:text-[#A0A7B8] font-semibold text-xs">
-              M A I N M E N U
-            </p>
+            <p className="text-[#94A7CB66] font-semibold text-xs">M A I N M E N U</p>
           </div>
           <div className="space-y-4 mt-6">
             <Link href="/dashboard">
@@ -188,11 +177,9 @@ export default function Dashboard() {
         </div>
 
         {/* Preferences Section */}
-        <div className="w-full h-auto gap-0 border-b border-[#F3F5F7] dark:border-[#444] py-4 mt-9">
+        <div className="w-full h-auto gap-0 border-b border-[#F3F5F7] py-4 mt-9">
           <div className="pl-4">
-            <p className="text-[#94A7CB66] dark:text-[#A0A7B8] font-semibold text-xs">
-              P R E F E R E N C E S
-            </p>
+            <p className="text-[#94A7CB66] font-semibold text-xs">P R E F E R E N C E S</p>
           </div>
           <div className="space-y-4 mt-6">
             <Link href="/Settings">
@@ -280,5 +267,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-
