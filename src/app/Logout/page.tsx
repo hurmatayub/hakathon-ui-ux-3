@@ -1,19 +1,19 @@
 "use client";
-
 import { useEffect } from "react";
-import { useRouter } from "next/navigation"; // For Next.js 13+ App Router
+import { useRouter } from "next/navigation"; 
+import router from "next/router";
 
-const LogoutPage = () => {
+const Logout = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    // Clear authentication data (localStorage or sessionStorage)
-    localStorage.removeItem("authToken");
-    sessionStorage.removeItem("authToken");
+  // useEffect(() => {
 
-    // Redirect user to login page
-    router.push("/login");
-  }, [router]);
+  //   localStorage.removeItem("authToken");
+  //   sessionStorage.removeItem("authToken");
+
+  //   // Redirect user to login page
+  //   router.push("/sign-in");
+  // }, [router]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
@@ -22,15 +22,17 @@ const LogoutPage = () => {
         <p className="text-lg text-gray-600 mb-4">
           You have been successfully logged out.
         </p>
-        <button
-          onClick={() => router.push("/login")}
+        {/* <button
+          onClick={() => router.push("/sign-in")}
           className="bg-red-500 text-white py-2 px-6 rounded-full hover:bg-red-600 transition-all"
         >
           Go to Login Page
-        </button>
+        </button> */}
       </div>
     </div>
   );
 };
 
-export default LogoutPage;
+export default Logout;
+
+

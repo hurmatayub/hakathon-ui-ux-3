@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SignedOut, SignInButton } from "@clerk/nextjs";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   return (
@@ -71,7 +73,7 @@ export default function Navbar() {
           className="w-[44px] h-[44px]"
         />
          </Link>
-         <Link href="/notifications">
+         <Link href="/Notifications">
         <Image
           src="/icons/Notification.png"
           alt="Notification Icon"
@@ -98,8 +100,17 @@ export default function Navbar() {
             className="w-[44px] h-[44px]"
           />
         </Link>
+        <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
       </div>
       
     </div>
   );
 }
+
+           
+            
