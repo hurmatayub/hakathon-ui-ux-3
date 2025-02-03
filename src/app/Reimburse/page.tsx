@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Sidebar from "../Settings/sidebar";
+import Sidebar from './sidebar';
 
 const ReimbursementPage = () => {
   const [formData, setFormData] = useState<{
