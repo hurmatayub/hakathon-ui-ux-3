@@ -782,29 +782,30 @@
 
 
 
-import PaymentClient from "@/app/Form/[slug]/billing/PaymentClient";
+// File: src/app/Form/[slug]/page.tsx
+
+// Removed unused 'Metadata' import to avoid ESLint warnings
 
 export interface PageProps {
   params: { slug: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default function BillingPage({ params }: PageProps) {
+export default function FormPage({ params }: PageProps) {
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold">Billing for {params.slug}</h1>
-      {/* Render the PaymentClient component and pass the slug */}
-      <PaymentClient slug={params.slug} />
+      <h1 className="text-2xl font-bold">Form for {params.slug}</h1>
+      <p>Please fill out the form below.</p>
+      {/* Add your form or additional content here */}
     </div>
   );
 }
 
-// Static generation: Generate paths for known slugs.
+// Optionally, you can add static parameters for static generation
 export async function generateStaticParams() {
-  return [{ slug: "basic" }, { slug: "premium" }];
+  return [
+    { slug: "basic" },
+    { slug: "premium" },
+    // Add more slugs if needed
+  ];
 }
-
-// Vercel/Next.js configuration
-export const dynamicParams = false;
-export const runtime = "nodejs";
-export const revalidate = 3600; // Cache for 1 hour
