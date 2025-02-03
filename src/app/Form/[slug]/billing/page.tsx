@@ -315,14 +315,14 @@ if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {
 
 const stripePromise = loadStripe("pk_test_51QoMp3DORAhVYIgxBKnAqsjFy0V49D5sGwu0ShX4C26ZOuOHkqnbBBsvKGfHQMVH4CoQhx0MpgL7kWhv3VuQvs5l00zsmGxxlw");
 
-// Utility function to clean price (remove "$" and "day")
+
 const cleanPrice = (price: string) => {
-  const cleanedPrice = price.replace(/[^\d.-]/g, ""); // Remove all non-numeric characters except for "." and "-"
-  return parseFloat(cleanedPrice); // Convert to number
+  const cleanedPrice = price.replace(/[^\d.-]/g, "");
+  return parseFloat(cleanedPrice);
 };
 
 const Payment = ({ params }: PageProps) => {
-  const { slug } = use(params); // ✅ Fix: Use use(params) to unwrap it
+  const { slug } = use(params);
 
   const [car, setCar] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -346,27 +346,27 @@ const Payment = ({ params }: PageProps) => {
   if (loading) return <p>Loading...</p>;
   if (!car) return <p>Car not found!</p>;
 
-  // Clean the pricePerDay string and convert to number
+  
   const pricePerDay = cleanPrice(car?.pricePerDay || "0");
 
-  // Convert the cleaned price to subcurrency (e.g., cents)
+  
   const amount = convertToSubcurrency(pricePerDay);
 
   return (
     <div className="mt-32 w-full h-auto max-w-[1440px] flex flex-col-reverse lg:flex-row gap-5 space-y-8">
-      {/* Payment Section */}
+   
       <Elements
         stripe={stripePromise}
         options={{
           mode: "payment",
-          amount: amount, // Use the cleaned and converted amount here
+          amount: amount, 
           currency: "usd",
         }}
       >
         <CheckoutPage amount={pricePerDay} />
       </Elements>
 
-      {/* Rental Summary */}
+    
       <div className="mx-10 max-w-[700px] lg:h-[560px] rounded-lg bg-white space-y-8 p-10 xl:mr-10">
         <div className="mb-4 lg:mb-6">
           <h2 className="text-[18px] sm:text-[20px] font-bold text-[#1A202C]">
@@ -425,7 +425,7 @@ const Payment = ({ params }: PageProps) => {
           </div>
         </div>
 
-        {/* Promo Code */}
+ 
         <div className="mb-4 lg:mb-6 flex flex-col sm:flex-row items-center gap-4 lg:gap-2">
           <input
             type="text"
@@ -439,7 +439,7 @@ const Payment = ({ params }: PageProps) => {
           </Link>
         </div>
 
-        {/* Total Price */}
+       
         <div className="border-t border-[#EDEDED] pt-4">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-2">
             <span className="text-[16px] sm:text-[20px] font-bold text-[#1A202C]">
