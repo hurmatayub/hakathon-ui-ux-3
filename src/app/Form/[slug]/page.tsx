@@ -1,5 +1,4 @@
 // File: src/app/product/[slug]/page.tsx
-import type { Metadata } from 'next'
 
 // 1. Unified Page Props
 export interface PageProps {
