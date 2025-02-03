@@ -745,7 +745,6 @@
 
 
 
-
 "use client";
 import React, { useEffect, useState } from "react";
 import {
@@ -760,9 +759,7 @@ const locations = ["New York", "Los Angeles", "Chicago", "Houston", "Miami"];
 const times = ["08:00 AM", "10:00 AM", "12:00 PM", "02:00 PM", "04:00 PM"];
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
-  const [rentalType, setRentalType] = useState("pick-up");
   const [pickUp, setPickUp] = useState({ location: "", date: "", time: "" });
-  const [dropOff, setDropOff] = useState({ location: "", date: "", time: "" });
 
   const stripe = useStripe();
   const elements = useElements();
@@ -868,3 +865,5 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
 };
 
 export default CheckoutPage;
+
+
