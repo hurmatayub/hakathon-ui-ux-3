@@ -18,7 +18,7 @@ interface PaymentProps {
 interface Car {
   name: string;
   pricePerDay: string;
-  image?: { url: string }; // Specify the structure for the image object
+  image?: { url: string }; 
 }
 
 if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {

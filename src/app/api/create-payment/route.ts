@@ -24,9 +24,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-// Initialize Stripe with your secret key
+
 const stripe = new Stripe("sk_test_51QoMp3DORAhVYIgx2BqSd0LXRChKT7C3zHw68tLKdiZpug0Kx5PfForUwFWWYZLIe7dHsKtkTJyjyQaoJKM3AWe200qGbfbzg7", {
-  apiVersion: "2025-01-27.acacia", // Specify the Stripe API version
+  apiVersion: "2025-01-27.acacia", 
 });
 
 export async function POST(request: NextRequest) {
@@ -48,3 +48,8 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+
+
+
+
