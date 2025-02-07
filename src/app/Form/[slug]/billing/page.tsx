@@ -9,13 +9,19 @@ import Image from "next/image";
 import { AiFillStar } from "react-icons/ai";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "@/sanity/lib/client";
-import { use } from "react";
 
-
+// ✅ Define expected structure for params
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
+interface Car {
+  name: string;
+  pricePerDay: string;
+  image?: any;
+}
+
+// ✅ Ensure Stripe public key is available
 if (!process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY) {
   throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");
 }
@@ -28,17 +34,17 @@ const cleanPrice = (price: string) => {
 };
 
 const Payment = ({ params }: PageProps) => {
-  const { slug } = use(params);
-  const [car, setCar] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [promoCode, setPromoCode] = useState("");
-  const [discount, setDiscount] = useState(0);
+  const { slug } = params;
+  const [car, setCar] = useState<Car | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [promoCode, setPromoCode] = useState<string>("");
+  const [discount, setDiscount] = useState<number>(0);
 
   useEffect(() => {
     const fetchCar = async () => {
       try {
         const query = `*[_type == "car" && slug.current == $slug][0]`;
-        const data = await client.fetch(query, { slug });
+        const data: Car = await client.fetch(query, { slug });
         setCar(data);
       } catch (error) {
         console.error("Error fetching car data:", error);
@@ -54,7 +60,6 @@ const Payment = ({ params }: PageProps) => {
   if (!car) return <p>Car not found!</p>;
 
   const pricePerDay = cleanPrice(car?.pricePerDay || "0");
-  const amount = convertToSubcurrency(pricePerDay);
   const applyPromoCode = () => {
     if (promoCode.toLowerCase() === "save10") {
       setDiscount(10);
@@ -66,11 +71,8 @@ const Payment = ({ params }: PageProps) => {
   const total = pricePerDay - discount;
 
   return (
-    
     <div className="flex flex-col-reverse lg:flex-row gap-5 p-5 bg-white">
-    
       {/* Payment Section */}
-     
       <Elements
         stripe={stripePromise}
         options={{
@@ -83,7 +85,6 @@ const Payment = ({ params }: PageProps) => {
       </Elements>
 
       {/* Rental Summary */}
-      
       <div className="flex flex-col max-w-[700px] w-full bg-white rounded-lg p-6 shadow-lg">
         <div className="mb-4">
           <h2 className="text-lg sm:text-xl font-semibold text-[#1A202C]">Rental Summary</h2>
@@ -162,3 +163,4 @@ const Payment = ({ params }: PageProps) => {
 };
 
 export default Payment;
+
